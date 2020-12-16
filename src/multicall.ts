@@ -24,6 +24,7 @@ export async function getAllPoolDataOnChain(
         pool.tokens.forEach(token => {
             addresses[i].push(token.address);
             total++;
+            total++;
         });
     }
 
