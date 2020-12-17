@@ -7,7 +7,7 @@
     "scripts": {
         "build": "tsc",
         "prepublish": "tsc",
-        "postinstall": "tsc",
+        "postinstall": "yarn install && tsc",
         "test": "nyc mocha -r ts-node/register test/*.spec.ts",
         "coverage": "nyc report --reporter=text-lcov | coveralls"
     },
