@@ -41,10 +41,9 @@ export class POOLS {
             },
             body: JSON.stringify({ query }),
         });
-        console.log("result", result)
         const allPools = await result.json();
         console.log("allPools", allPools)
-        return allPools;
+        return allPools.data;
     }
 
     async formatPoolsBigNumber(pools: SubGraphPools): Promise<Pools> {

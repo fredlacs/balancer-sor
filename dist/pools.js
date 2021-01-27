@@ -59,10 +59,9 @@ class POOLS {
                 },
                 body: JSON.stringify({ query }),
             });
-            console.log("result", result);
             const allPools = yield result.json();
             console.log("allPools", allPools);
-            return allPools;
+            return allPools.data;
         });
     }
     formatPoolsBigNumber(pools) {
