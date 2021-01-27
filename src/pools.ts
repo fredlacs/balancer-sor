@@ -42,7 +42,7 @@ export class POOLS {
             body: JSON.stringify({ query }),
         });
         console.log("result", result)
-        const allPools = result.json();
+        const allPools = await result.json();
         console.log("allPools", allPools)
         return allPools;
     }
