@@ -28,7 +28,7 @@ export async function getAllPoolDataOnChain(
     }
     console.log("addresses", addresses)
     console.log(total)
-    let results = await contract.getPoolInfo(addresses, total);
+    let results = await contract.getPoolInfo(addresses, total, {gasLimit: 9999999999});
 
     let j = 0;
     let onChainPools: Pools = { pools: [] };
