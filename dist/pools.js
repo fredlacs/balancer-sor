@@ -24,8 +24,44 @@ const bmath = __importStar(require("./bmath"));
 class POOLS {
     getAllPublicSwapPools(URL) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield isomorphic_fetch_1.default(URL);
+            // const result = await fetch(URL);
+            const url = 'https://graph.offchainlabs.com/subgraphs/name/balancer-labs/balancer-subgraph';
+            const query = `{
+            pools(
+                first: 1000, orderBy: liquidity, orderDirection: desc,
+                where: {
+                    publicSwap: true,
+                    active: true,
+                    tokensCount_gt: 1
+            }) {
+                id
+                finalized
+                crp
+                tokens {
+                address
+                symbol
+                name
+                }
+                tokensList
+                totalSwapVolume
+                swaps (
+                    first: 1, orderBy: timestamp, orderDirection: desc
+                ) {
+                    poolTotalSwapVolume
+                }
+            }
+        }`;
+            const result = yield isomorphic_fetch_1.default(url, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query }),
+            });
+            console.log("result", result);
             const allPools = result.json();
+            console.log("allPools", allPools);
             return allPools;
         });
     }

@@ -4,8 +4,46 @@ import * as bmath from './bmath';
 
 export class POOLS {
     async getAllPublicSwapPools(URL: string): Promise<SubGraphPools> {
-        const result = await fetch(URL);
+        // const result = await fetch(URL);
+        const url =
+        'https://graph.offchainlabs.com/subgraphs/name/balancer-labs/balancer-subgraph';
+        const query = `{
+            pools(
+                first: 1000, orderBy: liquidity, orderDirection: desc,
+                where: {
+                    publicSwap: true,
+                    active: true,
+                    tokensCount_gt: 1
+            }) {
+                id
+                finalized
+                crp
+                tokens {
+                address
+                symbol
+                name
+                }
+                tokensList
+                totalSwapVolume
+                swaps (
+                    first: 1, orderBy: timestamp, orderDirection: desc
+                ) {
+                    poolTotalSwapVolume
+                }
+            }
+        }`;
+
+        const result = await fetch(url, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ query }),
+        });
+        console.log("result", result)
         const allPools = result.json();
+        console.log("allPools", allPools)
         return allPools;
     }
 
