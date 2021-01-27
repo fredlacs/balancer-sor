@@ -35,6 +35,8 @@ function getAllPoolDataOnChain(pools, multiAddress, provider) {
                 total++;
             });
         }
+        console.log("addresses", addresses);
+        console.log(total);
         let results = yield contract.getPoolInfo(addresses, total);
         let j = 0;
         let onChainPools = { pools: [] };

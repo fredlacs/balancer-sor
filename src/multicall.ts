@@ -26,7 +26,8 @@ export async function getAllPoolDataOnChain(
             total++;
         });
     }
-
+    console.log("addresses", addresses)
+    console.log(total)
     let results = await contract.getPoolInfo(addresses, total);
 
     let j = 0;
