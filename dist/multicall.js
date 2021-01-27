@@ -38,6 +38,7 @@ function getAllPoolDataOnChain(pools, multiAddress, provider) {
         console.log("addresses", addresses);
         console.log(total);
         let results = yield contract.getPoolInfo(addresses, total, { gasLimit: 9999999999 });
+        console.log("after", results);
         let j = 0;
         let onChainPools = { pools: [] };
         for (let i = 0; i < pools.pools.length; i++) {
