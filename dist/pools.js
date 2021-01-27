@@ -38,12 +38,16 @@ class POOLS {
                 finalized
                 crp
                 tokens {
-                address
-                symbol
-                name
+                    address
+                    symbol
+                    name
+                    denormWeight
                 }
                 tokensList
                 totalSwapVolume
+                swapFee
+                totalWeight
+                publicSwap
                 swaps (
                     first: 1, orderBy: timestamp, orderDirection: desc
                 ) {

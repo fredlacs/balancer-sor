@@ -31,7 +31,7 @@ class SOR {
         this.MULTIADDR = {
             1: '0x514053acec7177e277b947b1ebb5c08ab4c4580e',
             42: '0x71c7f1086aFca7Aa1B0D4d73cfa77979d10D3210',
-            79377087078960: "0xd1930BB5AD5448E3be88DFAB7f94aeCf3bAB1Bb3",
+            79377087078960: "0x3A243b0cF2E55393562741711D78C6816Fc3140f",
         };
         this.provider = Provider;
         this.gasPrice = GasPrice;
@@ -61,12 +61,16 @@ class SOR {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 let allPools = yield this.pools.getAllPublicSwapPools(this.poolsUrl);
+                console.log("before stringify");
                 let previousStringify = JSON.stringify(this.onChainCache); // Used for compare
+                console.log("after stringify");
                 this.onChainCache = yield this.fetchOnChainPools(allPools);
+                console.log("before comp");
                 // If new pools are different from previous then any previous processed data is out of date so clear
                 if (previousStringify !== JSON.stringify(this.onChainCache)) {
                     this.processedDataCache = {};
                 }
+                console.log("after comp");
                 this.isAllFetched = true;
                 return true;
             }
@@ -89,7 +93,9 @@ class SOR {
                 console.error('ERROR: No Pools To Fetch.');
                 return { pools: [] };
             }
+            console.log("before get all");
             let onChainPools = yield sor.getAllPoolDataOnChain(SubgraphPools, this.MULTIADDR[this.chainId], this.provider);
+            console.log("after get all", onChainPools);
             // Error with multicall
             if (!onChainPools)
                 return { pools: [] };
