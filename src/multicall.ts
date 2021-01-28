@@ -28,7 +28,7 @@ export async function getAllPoolDataOnChain(
     }
     console.log("addresses", addresses)
     console.log(total)
-    let results = await contract.getPoolInfo(addresses, total, {gasLimit: 9999999999});
+    let results = (await contract.getPoolInfo(addresses, total*3)).filter(e => e.toHexString() !== "0x00");
     console.log("after", results)
 
     let j = 0;
