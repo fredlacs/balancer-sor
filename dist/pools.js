@@ -42,6 +42,7 @@ class POOLS {
                     symbol
                     name
                     denormWeight
+                    decimals
                 }
                 tokensList
                 totalSwapVolume
@@ -71,8 +72,10 @@ class POOLS {
     formatPoolsBigNumber(pools) {
         return __awaiter(this, void 0, void 0, function* () {
             let onChainPools = { pools: [] };
+            console.log("0", pools);
             for (let i = 0; i < pools.pools.length; i++) {
                 let tokens = [];
+                console.log("1");
                 let p = {
                     id: pools.pools[i].id,
                     swapFee: bmath.scale(bmath.bnum(pools.pools[i].swapFee), 18),
@@ -80,8 +83,10 @@ class POOLS {
                     tokens: tokens,
                     tokensList: pools.pools[i].tokensList,
                 };
+                console.log("2", p);
                 pools.pools[i].tokens.forEach(token => {
                     let decimals = Number(token.decimals);
+                    console.log("3");
                     p.tokens.push({
                         address: token.address,
                         balance: bmath.scale(bmath.bnum(token.balance), decimals),
@@ -91,6 +96,7 @@ class POOLS {
                 });
                 onChainPools.pools.push(p);
             }
+            console.log("4");
             return onChainPools;
         });
     }
