@@ -112,13 +112,13 @@ export class SOR {
             console.error('ERROR: No Pools To Fetch.');
             return { pools: [] };
         }
-        console.log("before get all")
+        
         let onChainPools: Pools = await sor.getAllPoolDataOnChain(
             SubgraphPools,
             this.MULTIADDR[this.chainId],
             this.provider
         );
-        console.log("after get all", onChainPools)
+
         // Error with multicall
         if (!onChainPools) return { pools: [] };
 
@@ -270,7 +270,7 @@ export class SOR {
 
             let decimalsIn = 0;
             let decimalsOut = 0;
-
+            console.log("before loop")
             // Find token decimals for scaling
             for (let i = 0; i < allPools.pools.length; i++) {
                 for (let j = 0; j < allPools.pools[i].tokens.length; j++) {
@@ -291,6 +291,7 @@ export class SOR {
 
                 if (decimalsIn > 0 && decimalsOut > 0) break;
             }
+            console.log("after loop")
 
             // These can be shared for both swap Types
             let pools: PoolDictionary, pathData: Path[];
@@ -299,6 +300,7 @@ export class SOR {
                 TokenOut,
                 allPools
             );
+            console.log("after pairs")
 
             // Find paths and prices for swap types
             let pathsExactIn: Path[], epsExactIn: EffectivePrice[];
@@ -331,7 +333,7 @@ export class SOR {
                 bnum('100'),
                 bnum('1000'),
             ];
-
+            console.log("range [art")
             // Calculate swaps for swapExactIn/Out over range and save swaps (with pools) returned
             range.forEach(amt => {
                 let amtIn = scale(amt, decimalsIn);
@@ -375,6 +377,7 @@ export class SOR {
                     });
                 });
             });
+            console.log("almopst done")
 
             // Get list of pool infos for pools of interest
             let poolsOfInterest: SubGraphPool[] = [];
@@ -386,6 +389,7 @@ export class SOR {
                     if (filteredPools.length === 0) break;
                 }
             }
+            console.log("almopst done2")
 
             let onChainPools: Pools = { pools: [] };
             if (poolsOfInterest.length !== 0) {
@@ -396,6 +400,7 @@ export class SOR {
                     this.provider
                 );
             }
+            console.log("almopst done3")
 
             // Add to cache for future use
             this.poolsForPairsCache[

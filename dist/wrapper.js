@@ -93,9 +93,7 @@ class SOR {
                 console.error('ERROR: No Pools To Fetch.');
                 return { pools: [] };
             }
-            console.log("before get all");
             let onChainPools = yield sor.getAllPoolDataOnChain(SubgraphPools, this.MULTIADDR[this.chainId], this.provider);
-            console.log("after get all", onChainPools);
             // Error with multicall
             if (!onChainPools)
                 return { pools: [] };
@@ -188,6 +186,7 @@ class SOR {
                 let allPools = yield this.pools.formatPoolsBigNumber(allPoolsNonBig);
                 let decimalsIn = 0;
                 let decimalsOut = 0;
+                console.log("before loop");
                 // Find token decimals for scaling
                 for (let i = 0; i < allPools.pools.length; i++) {
                     for (let j = 0; j < allPools.pools[i].tokens.length; j++) {
@@ -205,9 +204,11 @@ class SOR {
                     if (decimalsIn > 0 && decimalsOut > 0)
                         break;
                 }
+                console.log("after loop");
                 // These can be shared for both swap Types
                 let pools, pathData;
                 [pools, pathData] = this.processPairPools(TokenIn, TokenOut, allPools);
+                console.log("after pairs");
                 // Find paths and prices for swap types
                 let pathsExactIn, epsExactIn;
                 [pathsExactIn, epsExactIn] = this.processPathsAndPrices(JSON.parse(JSON.stringify(pathData)), pools, 'swapExactIn');
@@ -227,6 +228,7 @@ class SOR {
                     bmath_1.bnum('100'),
                     bmath_1.bnum('1000'),
                 ];
+                console.log("range [art");
                 // Calculate swaps for swapExactIn/Out over range and save swaps (with pools) returned
                 range.forEach(amt => {
                     let amtIn = bmath_1.scale(amt, decimalsIn);
@@ -252,6 +254,7 @@ class SOR {
                         });
                     });
                 });
+                console.log("almopst done");
                 // Get list of pool infos for pools of interest
                 let poolsOfInterest = [];
                 for (let i = 0; i < allPoolsNonBig.pools.length; i++) {
@@ -263,11 +266,13 @@ class SOR {
                             break;
                     }
                 }
+                console.log("almopst done2");
                 let onChainPools = { pools: [] };
                 if (poolsOfInterest.length !== 0) {
                     // Retrieves onchain balances for pools list
                     onChainPools = yield sor.getAllPoolDataOnChain({ pools: poolsOfInterest }, this.MULTIADDR[this.chainId], this.provider);
                 }
+                console.log("almopst done3");
                 // Add to cache for future use
                 this.poolsForPairsCache[this.createKey(TokenIn, TokenOut)] = onChainPools;
                 return true;
