@@ -31,7 +31,7 @@ class SOR {
         this.MULTIADDR = {
             1: '0x514053acec7177e277b947b1ebb5c08ab4c4580e',
             42: '0x71c7f1086aFca7Aa1B0D4d73cfa77979d10D3210',
-            79377087078960: "0x3e2e25Ed97d3C401929D21FE3AaaA5E0672cabc9",
+            79377087078960: "0xFc999EF9fcc201b85A4521b78fE80892b825f9d3",
         };
         this.provider = Provider;
         this.gasPrice = GasPrice;

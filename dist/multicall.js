@@ -35,7 +35,8 @@ function getAllPoolDataOnChain(pools, multiAddress, provider) {
                 total++;
             });
         }
-        let results = (yield contract.getPoolInfo(addresses, total * 3)).filter(e => e.toHexString() !== "0x00");
+        let results = yield contract.getPoolInfo(addresses, total);
+        // let results = (await contract.getPoolInfo(addresses, total*3)).filter(e => e.toHexString() !== "0x00");
         let j = 0;
         let onChainPools = { pools: [] };
         for (let i = 0; i < pools.pools.length; i++) {

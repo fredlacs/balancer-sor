@@ -26,7 +26,8 @@ export async function getAllPoolDataOnChain(
             total++;
         });
     }
-    let results = (await contract.getPoolInfo(addresses, total*3)).filter(e => e.toHexString() !== "0x00");
+    let results = await contract.getPoolInfo(addresses, total)
+    // let results = (await contract.getPoolInfo(addresses, total*3)).filter(e => e.toHexString() !== "0x00");
 
     let j = 0;
     let onChainPools: Pools = { pools: [] };
