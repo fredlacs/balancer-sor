@@ -259,9 +259,11 @@ export class SOR {
 
         try {
             // Get all IPFS pools (with balance)
+            console.log("starting filtered", this.poolsUrl)
             let allPoolsNonBig = await this.pools.getAllPublicSwapPools(
                 this.poolsUrl
             );
+            console.log("after filtered", allPoolsNonBig)
 
             // Convert to BigNumber format
             let allPools = await this.pools.formatPoolsBigNumber(

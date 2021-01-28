@@ -181,7 +181,9 @@ class SOR {
             TokenOut = TokenOut.toLowerCase();
             try {
                 // Get all IPFS pools (with balance)
+                console.log("starting filtered", this.poolsUrl);
                 let allPoolsNonBig = yield this.pools.getAllPublicSwapPools(this.poolsUrl);
+                console.log("after filtered", allPoolsNonBig);
                 // Convert to BigNumber format
                 let allPools = yield this.pools.formatPoolsBigNumber(allPoolsNonBig);
                 let decimalsIn = 0;
