@@ -24,6 +24,7 @@ export class POOLS {
                     name
                     denormWeight
                     decimals
+                    balance
                 }
                 tokensList
                 totalSwapVolume
